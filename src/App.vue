@@ -1,30 +1,80 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div
+    id="app"
+    :class="{ active: isNavListActive }"
+    @click.self="listHandler()"
+  >
+    <Nav />
+    <router-view />
+    <Footer />
   </div>
-  <router-view />
 </template>
 
-<style>
+<script>
+import globalStyles from "@/composables/globalStyles.js";
+
+import Nav from "@/components/General/Nav";
+import Footer from "@/components/General/Footer";
+
+import { computed } from "@vue/runtime-core";
+import { useStore } from "vuex";
+export default {
+  components: {
+    Nav,
+    Footer,
+  },
+  setup() {
+    return {
+      ...globalStylesFunc(),
+      ...listHandlerFunc(),
+    };
+  },
+};
+
+/* Global Styles Function */
+function globalStylesFunc() {
+  const { bodyStyle, elementsStyle } = globalStyles();
+
+  return { bodyStyle, elementsStyle };
+}
+
+/* Nav List Handler */
+function listHandlerFunc() {
+  const store = useStore();
+
+  const isNavListActive = computed(() => {
+    return store.state.listStatus;
+  });
+  const listHandler = () => {
+    if (isNavListActive.value) store.commit("TOGGLE_NAV_LIST");
+  };
+
+  return { isNavListActive, listHandler };
+}
+</script>
+
+<style lang="scss" scoped>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+  transition: transform 0.3s ease-in-out;
+  position: relative;
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+  &.active {
+    transform: translateX(-30vw);
+    @media (max-width: 600px) {
+      transform: translateX(-70vw);
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      z-index: 199;
+      top: 0;
+      left: 0;
+      width: 100%;
+      min-height: 400vh;
+      transition: transform 0.3s ease-in-out;
+      // background-color: rgba(167, 167, 167, 0.116);
+      backdrop-filter: blur(2px);
+    }
+  }
 }
 </style>

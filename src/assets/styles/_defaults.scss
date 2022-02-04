@@ -1,0 +1,32 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css");
+
+html,
+body {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  transition: all 0.3s ease-in-out;
+  // min-height: 400vh;
+}
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(224, 224, 224);
+  border-radius: 5px;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+.transition {
+  transition: all 0.3s ease-in-out;
+}
