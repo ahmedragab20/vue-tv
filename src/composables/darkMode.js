@@ -23,7 +23,7 @@ function darkMode() {
 
   const isDarkHandler = () => {
     if (!localStorage.getItem("dark")) {
-      localStorage.setItem("dark", false);
+      localStorage.setItem("dark", true);
     } else {
       let dark = JSON.parse(localStorage.getItem("dark"));
 
@@ -32,7 +32,7 @@ function darkMode() {
   };
 
   watchEffect(() => {
-    isDarkHandler();
+    setInterval(() => isDarkHandler());
   });
 
   return { theme, isDarkHandler, isDark, toggleDarkMode };

@@ -3,6 +3,8 @@
     id="app"
     :class="{ active: isNavListActive }"
     @click.self="listHandler()"
+    v-if="theme"
+    :style="`color: ${theme.color}; background: ${theme.background}`"
   >
     <Nav />
     <router-view />
@@ -41,6 +43,9 @@ function globalStylesFunc() {
 /* Nav List Handler */
 function listHandlerFunc() {
   const store = useStore();
+  const theme = computed(() => {
+    return store.state.theme;
+  });
 
   const isNavListActive = computed(() => {
     return store.state.listStatus;
@@ -49,7 +54,7 @@ function listHandlerFunc() {
     if (isNavListActive.value) store.commit("TOGGLE_NAV_LIST");
   };
 
-  return { isNavListActive, listHandler };
+  return { isNavListActive, listHandler, theme };
 }
 </script>
 
