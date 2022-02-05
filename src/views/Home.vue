@@ -27,7 +27,7 @@
           </div>
         </div>
       </CardsSlider>
-      <LoadMore param="/" />
+      <LoadMore param="/movies" />
 
       <!-- Popular TV Shows Block -->
       <Headline title="Popular Tv Shows" txtStyle="text-center mt-5 mb-4" />
@@ -42,7 +42,7 @@
           </div>
         </div>
       </CardsSlider>
-      <LoadMore param="/" />
+      <LoadMore param="/tv" />
     </div>
   </div>
 </template>
@@ -57,8 +57,8 @@ import Slider from "@/components/Reusable/Slider";
 import LGCard from "../components/Reusable/LGCard.vue";
 import Headline from "../components/Reusable/Headline.vue";
 import PreviewCard from "../components/Reusable/PreviewCard.vue";
-import CardsSlider from "../components/Reusable/CardsSlider.vue";
 import LoadMore from "../components/Reusable/LoadMore.vue";
+import CardsSlider from "../components/Reusable/CardsSlider.vue";
 
 export default {
   name: "Home",
@@ -83,13 +83,15 @@ function FetchHomeDataFunc() {
   const theme = store.state.theme;
 
   const HomeData = computed(() => {
-    return store.state.homeData.HomeData;
+    if (store.state.homeData.HomeData)
+      return store.state.homeData.HomeData.results;
   });
   const TopMovies = computed(() => {
-    return store.state.movies.TopMovies;
+    if (store.state.movies.TopMovies)
+      return store.state.movies.TopMovies.results;
   });
   const TopShows = computed(() => {
-    return store.state.shows.TopShows;
+    if (store.state.shows.TopShows) return store.state.shows.TopShows.results;
   });
 
   // console.log(TopMovies);

@@ -7,7 +7,11 @@
     :style="`color: ${theme.color}; background: ${theme.background}`"
   >
     <Nav />
-    <router-view />
+    <router-view v-slot="{ Component }">
+      <transition name="rout" mode="out-in">
+        <component :is="Component"></component>
+      </transition>
+    </router-view>
     <Footer />
   </div>
 </template>
@@ -62,6 +66,7 @@ function listHandlerFunc() {
 #app {
   transition: transform 0.3s ease-in-out;
   position: relative;
+  height: 100%;
 
   &.active {
     transform: translateX(-30vw);
@@ -81,5 +86,15 @@ function listHandlerFunc() {
       backdrop-filter: blur(2px);
     }
   }
+}
+/* transitions */
+.rout-enter-from,
+.rout-leave-to {
+  opacity: 0;
+  transform: translateX(-100px);
+}
+.rout-enter-active,
+.rout-leave-active {
+  transition: all 0.3s ease-in-out;
 }
 </style>

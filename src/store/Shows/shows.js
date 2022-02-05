@@ -13,8 +13,8 @@ const mutations = {
 };
 
 const actions = {
-  getTopShows(_, page_id) {
-    get("tv", "popular", false, page_id, "TOP_SHOWS");
+  getTopShows(_, page_number) {
+    get("tv", "popular", false, page_number, "TOP_SHOWS");
   },
 };
 

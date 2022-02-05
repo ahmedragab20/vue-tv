@@ -3,12 +3,16 @@
     <div class="container">
       <div class="logo">
         <h2 class="d-none d-md-block">
-          <span>Vue</span>
-          <strong>TV</strong>
+          <router-link to="/">
+            <span>Vue</span>
+            <strong>TV</strong>
+          </router-link>
         </h2>
         <h3 class="d-block d-md-none">
-          <span>Vue</span>
-          <strong>TV</strong>
+          <router-link to="/">
+            <span>Vue</span>
+            <strong>TV</strong>
+          </router-link>
         </h3>
       </div>
       <div class="d-flex gap-3">
@@ -48,7 +52,12 @@
         </div>
         <div class="list h-50">
           <ul class="text-center d-flex flex-column gap-3">
-            <li v-for="(link, i) in links" :key="i" class="my-2 mx-5">
+            <li
+              v-for="(link, i) in links"
+              :key="i"
+              class="my-2 mx-5"
+              @click="listHandler"
+            >
               <router-link :to="link.to" class="reverseColor p-1">
                 {{ link.name }}
               </router-link>

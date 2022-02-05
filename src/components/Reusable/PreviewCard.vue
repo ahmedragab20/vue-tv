@@ -19,8 +19,8 @@
         <div class="title">
           <CardTitle
             :title="item.title || item.name"
-            :length="14"
-            :smLength="11"
+            :length="12"
+            :smLength="10"
             txtStyle="font-weight-bold text-capitalize fw-bold"
             :color="theme.color"
           />
@@ -63,8 +63,8 @@
             <div class="title">
               <CardTitle
                 :title="item.title || item.name"
-                :length="22"
-                :smLength="19"
+                :length="17"
+                :smLength="12"
                 txtStyle="font-weight-bold text-capitalize fw-bold"
                 :color="theme.color"
               />
@@ -74,7 +74,7 @@
                 :text="item.overview"
                 :color="theme.color"
                 txtStyle=""
-                :length="70"
+                :length="40"
               />
             </div>
           </div>
@@ -117,6 +117,24 @@ export default {
     };
   },
   setup() {
+    setInterval(() => {
+      let hover_card = document.querySelectorAll(".hover");
+      hover_card.forEach((el) => {
+        let rect = el.getBoundingClientRect();
+
+        if (100 < rect.left) {
+          if (!el.style.right) {
+            el.style.right = `0px`;
+          }
+        } else {
+          if (!el.style.left) {
+            el.style.left = `0px`;
+          }
+        }
+        // console.log(rect.top, rect.right, rect.bottom, rect.left);
+      });
+    });
+
     return {};
   },
 };
@@ -150,25 +168,22 @@ export default {
       backdrop-filter: blur(2px);
       box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.363);
       border-radius: 0 0 0.25rem 0.25rem;
+
+      small {
+        transform: translateY(-5px);
+      }
     }
     .hover {
       top: 0;
-      height: 200px;
+      height: 180px;
       border-radius: 20px;
-      width: 150%;
-      right: 0%;
+      width: 140%;
+      // right: 0%;
       opacity: 0;
       z-index: 9;
       pointer-events: none;
       backdrop-filter: blur(5px);
       transition: all 0.4s ease-in-out;
-    }
-  }
-
-  @media (max-width: 320px) {
-    small {
-      font-size: 0.7rem;
-      transform: translateY(-5px);
     }
   }
 }
