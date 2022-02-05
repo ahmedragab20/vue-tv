@@ -82,6 +82,7 @@ export default {
       { name: "Home", to: "/" },
       { name: "Movies", to: "/movies" },
       { name: "TV Shows", to: "/tv" },
+      { name: "Favourites", to: "/favs" },
     ]);
 
     const isActive = computed(() => {

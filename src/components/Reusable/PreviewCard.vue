@@ -1,5 +1,5 @@
 <template>
-  <div class="preview-card m-2 rounded">
+  <div class="preview-card m-2 radius">
     <div class="card-container">
       <div class="image">
         <img
@@ -19,8 +19,8 @@
         <div class="title">
           <CardTitle
             :title="item.title || item.name"
-            :length="12"
-            :smLength="10"
+            :length="10"
+            :smLength="8"
             txtStyle="font-weight-bold text-capitalize fw-bold"
             :color="theme.color"
           />
@@ -40,6 +40,7 @@
         </div>
       </div>
       <div
+        v-if="hover"
         class="hover position-absolute pt-2 px-3"
         :style="`background-color: ${theme.lite_color}`"
       >
@@ -63,7 +64,7 @@
             <div class="title">
               <CardTitle
                 :title="item.title || item.name"
-                :length="17"
+                :length="15"
                 :smLength="12"
                 txtStyle="font-weight-bold text-capitalize fw-bold"
                 :color="theme.color"
@@ -74,19 +75,36 @@
                 :text="item.overview"
                 :color="theme.color"
                 txtStyle=""
-                :length="40"
+                :length="30"
               />
             </div>
           </div>
           <div class="col-12">
-            <button
+            <router-link
+              v-if="type !== 'fav'"
+              :to="`/${type}/${item.id}`"
               class="btn color radius mt-3 text-uppercase"
               :style="`background-color: ${theme.background}`"
             >
               <i class="bi bi-play"></i> more details
+            </router-link>
+            <button
+              @click="deleteBtn(item.id)"
+              v-else
+              class="btn btn-danger radius mt-3 text-uppercase"
+            >
+              Remove
             </button>
           </div>
         </div>
+      </div>
+      <div v-else>
+        <router-link
+          v-if="type !== 'fav'"
+          :to="`/${type}/${item.id}`"
+          class="position-absolute top-0 w-100 h-100"
+        >
+        </router-link>
       </div>
     </div>
   </div>
@@ -109,13 +127,20 @@ export default {
       required: true,
       type: String,
     },
+    type: {
+      required: true,
+      type: String,
+    },
+    deleteBtn: {
+      required: false,
+      type: Function,
+    },
+    hover: {
+      required: false,
+      type: Boolean,
+    },
   },
   components: { CardTitle, CardText },
-  data() {
-    return {
-      img: `https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSsbM-CNLR8bMc-o5Rb0b-ZifcXlSOq5s4eM5Y9aOKsR3yC_PVg`,
-    };
-  },
   setup() {
     setInterval(() => {
       let hover_card = document.querySelectorAll(".hover");
@@ -143,7 +168,6 @@ export default {
 <style lang="scss" scoped>
 .preview-card {
   max-width: 180px;
-  min-height: 250px;
   .card-container {
     position: relative;
 
@@ -157,7 +181,9 @@ export default {
     .image {
       // width: 100%;
       height: 100%;
-      z-index: 0;
+      img {
+        z-index: 0;
+      }
     }
     .context {
       position: absolute;
@@ -171,6 +197,10 @@ export default {
 
       small {
         transform: translateY(-5px);
+
+        @media (max-width: 310px) {
+          font-size: 0.6rem;
+        }
       }
     }
     .hover {

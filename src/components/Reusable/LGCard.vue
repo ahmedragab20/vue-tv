@@ -42,13 +42,15 @@
         class="col-md-4 d-flex justify-content-center align-items-center flex-column"
       >
         <div class="image">
-          <img
-            :style="`box-shadow: ${theme.shadow}`"
-            :src="image_url + item.poster_path"
-            alt=""
-            width="200"
-            class="img-fluid rounded"
-          />
+          <router-link :to="`/${item.media_type}/${item.id}`">
+            <img
+              :style="`box-shadow: ${theme.shadow}`"
+              :src="image_url + item.poster_path"
+              alt=""
+              width="200"
+              class="img-fluid rounded"
+            />
+          </router-link>
         </div>
       </div>
       <div class="col-md-4">

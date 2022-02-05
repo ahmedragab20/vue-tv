@@ -1,6 +1,6 @@
 <template>
-  <div class="home" v-if="HomeData && TopMovies && TopShows">
-    <div class="container mt-4">
+  <div class="home">
+    <div class="container mt-4" v-if="HomeData && TopMovies && TopShows">
       <!-- Slider Block -->
       <Slider :theme="theme" height="85vh" :breakpoints="{}" :visibleSlides="1">
         <vueper-slide
@@ -23,7 +23,13 @@
           :key="item.id"
         >
           <div class="carousel-cell" style="width: 100%">
-            <PreviewCard :item="item" :theme="theme" :image_url="image_url" />
+            <PreviewCard
+              :item="item"
+              :theme="theme"
+              :image_url="image_url"
+              :hover="true"
+              type="movie"
+            />
           </div>
         </div>
       </CardsSlider>
@@ -38,11 +44,20 @@
           :key="item.id"
         >
           <div class="carousel-cell" style="width: 100%">
-            <PreviewCard :item="item" :theme="theme" :image_url="image_url" />
+            <PreviewCard
+              :item="item"
+              :theme="theme"
+              :hover="true"
+              :image_url="image_url"
+              type="tv"
+            />
           </div>
         </div>
       </CardsSlider>
       <LoadMore param="/tv" />
+    </div>
+    <div v-else>
+      <LoadingPage />
     </div>
   </div>
 </template>
@@ -59,6 +74,7 @@ import Headline from "../components/Reusable/Headline.vue";
 import PreviewCard from "../components/Reusable/PreviewCard.vue";
 import LoadMore from "../components/Reusable/LoadMore.vue";
 import CardsSlider from "../components/Reusable/CardsSlider.vue";
+import LoadingPage from "../components/Reusable/LoadingPage.vue";
 
 export default {
   name: "Home",
@@ -70,6 +86,7 @@ export default {
     PreviewCard,
     CardsSlider,
     LoadMore,
+    LoadingPage,
   },
   setup() {
     const image_url = "https://image.tmdb.org/t/p/w500";

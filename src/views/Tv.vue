@@ -7,7 +7,13 @@
         v-for="item in TopShows.results"
         :key="item.id"
       >
-        <PreviewCard :item="item" :theme="theme" :image_url="image_url" />
+        <PreviewCard
+          :item="item"
+          :theme="theme"
+          :image_url="image_url"
+          type="tv"
+          :hover="true"
+        />
       </div>
       <div
         class="col-12 d-flex justify-content-center align-items-center mt-3"

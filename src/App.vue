@@ -1,18 +1,23 @@
 <template>
-  <div
-    id="app"
-    :class="{ active: isNavListActive }"
-    @click.self="listHandler()"
-    v-if="theme"
-    :style="`color: ${theme.color}; background: ${theme.background}`"
-  >
-    <Nav />
-    <router-view v-slot="{ Component }">
-      <transition name="rout" mode="out-in">
-        <component :is="Component"></component>
-      </transition>
-    </router-view>
-    <Footer />
+  <div>
+    <div
+      id="app"
+      :class="{ active: isNavListActive }"
+      @click.self="listHandler()"
+      v-if="theme && isMonted"
+      :style="`color: ${theme.color}; background: ${theme.background}`"
+    >
+      <Nav />
+      <router-view v-slot="{ Component }">
+        <transition name="rout" mode="out-in">
+          <component :is="Component"></component>
+        </transition>
+      </router-view>
+      <Footer />
+    </div>
+    <div v-else>
+      <LoadingPage />
+    </div>
   </div>
 </template>
 
@@ -21,13 +26,15 @@ import globalStyles from "@/composables/globalStyles.js";
 
 import Nav from "@/components/General/Nav";
 import Footer from "@/components/General/Footer";
+import LoadingPage from "./components/Reusable/LoadingPage.vue";
 
-import { computed } from "@vue/runtime-core";
+import { computed, onMounted, ref } from "@vue/runtime-core";
 import { useStore } from "vuex";
 export default {
   components: {
     Nav,
     Footer,
+    LoadingPage,
   },
   setup() {
     return {
@@ -51,6 +58,20 @@ function listHandlerFunc() {
     return store.state.theme;
   });
 
+  const isMonted = ref(false);
+  const updateFavs = () => {
+    return setInterval(store.commit("updateFavStorage"));
+  };
+
+  onMounted(() => {
+    updateFavs();
+    if (theme) {
+      setTimeout(() => {
+        isMonted.value = true;
+      }, 1000);
+    }
+  });
+
   const isNavListActive = computed(() => {
     return store.state.listStatus;
   });
@@ -58,7 +79,7 @@ function listHandlerFunc() {
     if (isNavListActive.value) store.commit("TOGGLE_NAV_LIST");
   };
 
-  return { isNavListActive, listHandler, theme };
+  return { isMonted, isNavListActive, listHandler, theme };
 }
 </script>
 

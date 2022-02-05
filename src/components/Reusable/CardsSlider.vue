@@ -49,7 +49,18 @@ export default {
 
     setTimeout(() => {
       clearInterval(slider);
-    }, 1000);
+    }, 1200);
+  },
+  updated() {
+    const slider = setInterval(() => {
+      this.$nextTick(function () {
+        this.$refs.flickity.rerender();
+      });
+    });
+
+    setTimeout(() => {
+      clearInterval(slider);
+    }, 1200);
   },
 };
 </script>
@@ -57,6 +68,11 @@ export default {
 .flickity-enabled {
   .flickity-viewport {
     height: auto;
+    min-height: 250px;
+
+    @media (max-width: 280px) {
+      min-height: 200px;
+    }
   }
 }
 </style>
