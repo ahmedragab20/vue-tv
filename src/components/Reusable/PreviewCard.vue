@@ -142,26 +142,29 @@ export default {
   },
   components: { CardTitle, CardText },
   setup() {
-    let hover_card = document.querySelectorAll(".hover");
-    // console.log(hover_card);
-    hover_card.forEach((el) => {
-      let rect = el.getBoundingClientRect();
+    let interval = setInterval(() => {
+      let hover_card = document.querySelectorAll(".hover");
+      // console.log(hover_card);
+      hover_card.forEach((el) => {
+        let rect = el.getBoundingClientRect();
 
-      if (300 <= rect.right) {
-        el.style.left = "auto";
-        el.style.right = `0px`;
-        // console.log("right", rect.right);
-      } else {
-        el.style.left = "0px";
-        el.style.right = `auto`;
-        // console.log("left", rect.right);
-      }
-      // setInterval(() => {
+        if (250 > rect.right) {
+          el.style.right = "";
+          el.style.left = `0px`;
 
-      //     // console.log(rect.top, rect.right, rect.bottom, rect.left);
-      //   });
+          // console.log("right", rect.right);
+        } else {
+          el.style.left = "";
+          el.style.right = "0px";
+
+          // console.log("left", rect.right);
+        }
+      });
     });
 
+    setTimeout(() => {
+      clearInterval(interval);
+    }, 500);
     return {};
   },
 };
