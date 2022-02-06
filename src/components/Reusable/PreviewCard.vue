@@ -151,13 +151,9 @@ export default {
         if (250 > rect.right) {
           el.style.right = "";
           el.style.left = `0px`;
-
-          // console.log("right", rect.right);
         } else {
           el.style.left = "";
           el.style.right = "0px";
-
-          // console.log("left", rect.right);
         }
       });
     });
