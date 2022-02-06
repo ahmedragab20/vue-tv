@@ -4,6 +4,7 @@ const state = {
   TopShows: null,
   ShowDetails: null,
   SimilarShows: null,
+  ShowsVideos: null,
 };
 
 const getters = {};
@@ -18,6 +19,9 @@ const mutations = {
   SIMILAR_SHOWS(state, data) {
     state.SimilarShows = data;
   },
+  SHOWS_VIDEOS(state, data) {
+    state.ShowsVideos = data;
+  },
 };
 
 const actions = {
@@ -29,6 +33,9 @@ const actions = {
   },
   getSimilarShows(_, show_id) {
     get("tv", show_id, "similar", 1, "SIMILAR_SHOWS");
+  },
+  getShowsVideos(_, show_id) {
+    get("tv", show_id, "videos", 1, "SHOWS_VIDEOS");
   },
 };
 

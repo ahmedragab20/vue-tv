@@ -4,6 +4,7 @@ const state = {
   TopMovies: null,
   MovieDetails: null,
   SimilarMovies: null,
+  MovieVideos: null,
   AddRate: null,
 };
 
@@ -19,6 +20,9 @@ const mutations = {
   SIMILAR_MOVIES(state, data) {
     state.SimilarMovies = data;
   },
+  MOVIE_VIDEOS(state, data) {
+    state.MovieVideos = data;
+  },
   ADD_RATE(state, data) {
     state.AddRate = data;
   },
@@ -33,6 +37,9 @@ const actions = {
   },
   getSimilarMovies(_, movie_id) {
     get("movie", movie_id, "similar", 1, "SIMILAR_MOVIES");
+  },
+  getMovieVideos(_, movie_id) {
+    get("movie", movie_id, "videos", 1, "MOVIE_VIDEOS");
   },
   postAddRate() {
     let payload = JSON.parse(sessionStorage.getItem("rate_payload"));
