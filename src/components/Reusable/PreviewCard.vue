@@ -142,22 +142,24 @@ export default {
   },
   components: { CardTitle, CardText },
   setup() {
-    setInterval(() => {
-      let hover_card = document.querySelectorAll(".hover");
-      hover_card.forEach((el) => {
-        let rect = el.getBoundingClientRect();
+    let hover_card = document.querySelectorAll(".hover");
+    // console.log(hover_card);
+    hover_card.forEach((el) => {
+      let rect = el.getBoundingClientRect();
 
-        if (100 < rect.left) {
-          if (!el.style.right) {
-            el.style.right = `0px`;
-          }
-        } else {
-          if (!el.style.left) {
-            el.style.left = `0px`;
-          }
-        }
-        // console.log(rect.top, rect.right, rect.bottom, rect.left);
-      });
+      if (300 <= rect.right) {
+        el.style.left = "auto";
+        el.style.right = `0px`;
+        // console.log("right", rect.right);
+      } else {
+        el.style.left = "0px";
+        el.style.right = `auto`;
+        // console.log("left", rect.right);
+      }
+      // setInterval(() => {
+
+      //     // console.log(rect.top, rect.right, rect.bottom, rect.left);
+      //   });
     });
 
     return {};
