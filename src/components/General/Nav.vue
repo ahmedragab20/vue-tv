@@ -24,6 +24,9 @@
             <i class="bi bi-circle-half"></i>
           </button>
         </div>
+        <div class="search p-2 color" @click="SearchModalHandler">
+          <i class="bi bi-search"></i>
+        </div>
         <div
           class="burger transition radius"
           @click="listHandler"
@@ -88,15 +91,24 @@ export default {
     const isActive = computed(() => {
       return store.state.listStatus;
     });
+    // console.log(store.state);
+    const SearchModal = computed(() => {
+      return store.state.search.SearchModal;
+    });
 
     const listHandler = () => {
       store.commit("TOGGLE_NAV_LIST");
+    };
+    const SearchModalHandler = () => {
+      store.commit("SEARCH_MODAL");
     };
 
     return {
       isActive,
       listHandler,
       links,
+      SearchModal,
+      SearchModalHandler,
       ...darkModeFunc(),
     };
   },
@@ -127,6 +139,9 @@ nav {
     align-items: center;
     justify-content: space-between;
     gap: 10px;
+    .search {
+      cursor: pointer;
+    }
 
     .mode {
       button {

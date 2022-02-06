@@ -14,7 +14,7 @@
             :item="item"
             :theme="theme"
             :image_url="image_url"
-            :deleteBtn="removeFav"
+            :handler="removeFav"
             type="fav"
             :hover="true"
           />

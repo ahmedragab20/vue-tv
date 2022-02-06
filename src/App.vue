@@ -8,6 +8,9 @@
       :style="`color: ${theme.color}; background: ${theme.background}`"
     >
       <Nav />
+      <transition appear name="search" v-if="SearchModal">
+        <SearchModal :theme="theme" />
+      </transition>
       <router-view v-slot="{ Component }">
         <transition name="rout" mode="out-in">
           <component :is="Component"></component>
@@ -27,6 +30,7 @@ import globalStyles from "@/composables/globalStyles.js";
 import Nav from "@/components/General/Nav";
 import Footer from "@/components/General/Footer";
 import LoadingPage from "./components/Reusable/LoadingPage.vue";
+import SearchModal from "./components/Reusable/SearchModal.vue";
 
 import { computed, onMounted, ref } from "@vue/runtime-core";
 import { useStore } from "vuex";
@@ -35,6 +39,7 @@ export default {
     Nav,
     Footer,
     LoadingPage,
+    SearchModal,
   },
   setup() {
     return {
@@ -56,6 +61,9 @@ function listHandlerFunc() {
   const store = useStore();
   const theme = computed(() => {
     return store.state.theme;
+  });
+  const SearchModal = computed(() => {
+    return store.state.search.SearchModal;
   });
 
   const isMonted = ref(false);
@@ -79,7 +87,7 @@ function listHandlerFunc() {
     if (isNavListActive.value) store.commit("TOGGLE_NAV_LIST");
   };
 
-  return { isMonted, isNavListActive, listHandler, theme };
+  return { isMonted, isNavListActive, listHandler, SearchModal, theme };
 }
 </script>
 
@@ -109,6 +117,15 @@ function listHandlerFunc() {
   }
 }
 /* transitions */
+.search-enter-from,
+.search-leave-to {
+  opacity: 0;
+  transform: translateY(-100px);
+}
+.search-enter-active,
+.search-leave-active {
+  transition: all 0.3s ease-in-out;
+}
 .rout-enter-from,
 .rout-leave-to {
   opacity: 0;

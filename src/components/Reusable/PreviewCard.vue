@@ -81,7 +81,16 @@
           </div>
           <div class="col-12">
             <router-link
-              v-if="type !== 'fav'"
+              v-if="type !== 'fav' && !handler"
+              :to="`/${type}/${item.id}`"
+              class="btn color radius mt-3 text-uppercase"
+              :style="`background-color: ${theme.background}`"
+            >
+              <i class="bi bi-play"></i> more details
+            </router-link>
+            <router-link
+              v-else-if="type !== 'fav' && handler"
+              @click="handler()"
               :to="`/${type}/${item.id}`"
               class="btn color radius mt-3 text-uppercase"
               :style="`background-color: ${theme.background}`"
@@ -89,7 +98,7 @@
               <i class="bi bi-play"></i> more details
             </router-link>
             <button
-              @click="deleteBtn(item.id)"
+              @click="handler(item.id)"
               v-else
               class="btn btn-danger radius mt-3 text-uppercase"
             >
@@ -131,7 +140,7 @@ export default {
       required: true,
       type: String,
     },
-    deleteBtn: {
+    handler: {
       required: false,
       type: Function,
     },
