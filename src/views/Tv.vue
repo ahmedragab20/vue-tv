@@ -1,6 +1,6 @@
 <template>
   <div class="tv-shows container" v-if="TopShows">
-    <Headline title="*Popular Tv Shows" txtStyle="text-center mt-5 mb-4" />
+    <Headline title="Popular Tv Shows" txtStyle="text-center mt-5 mb-4" />
     <div class="row">
       <div
         class="col-6 col-sm-4 col-md-3 col-xl-2"
