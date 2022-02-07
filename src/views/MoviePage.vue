@@ -1,5 +1,8 @@
 <template>
-  <div class="details-page" v-if="MovieDetails && SimilarMovies && MovieVideos">
+  <div
+    class="details-page"
+    v-if="MovieDetails && SimilarMovies && filterVideos"
+  >
     <!-- Header Holder -->
     <header
       :style="`background: url(${
@@ -25,40 +28,58 @@
               />
             </div>
             <div class="col-lg-4 col-12">
-              <Headline title="Similar" txtStyle="my-2" />
-              <Slider
-                :theme="theme"
-                height="260px"
-                :breakpoints="{}"
-                :visibleSlides="2"
-              >
-                <vueper-slide
-                  v-for="item in SimilarMovies.results"
-                  :key="item.id"
+              <div class="col-12">
+                <Headline title="Similar" txtStyle="mb-2" />
+                <Slider
+                  :theme="theme"
+                  height="260px"
+                  :breakpoints="{}"
+                  :visibleSlides="2"
                 >
-                  <template #content>
-                    <PreviewCard
-                      :item="item"
+                  <vueper-slide
+                    v-for="item in SimilarMovies.results"
+                    :key="item.id"
+                  >
+                    <template #content>
+                      <PreviewCard
+                        :item="item"
+                        :theme="theme"
+                        :image_url="image_url"
+                        :hover="false"
+                        type="movie"
+                      />
+                    </template>
+                  </vueper-slide>
+                </Slider>
+              </div>
+              <div class="col-12" v-if="filterCast.length > 0">
+                <Headline title="Cast" txtStyle="mb-2" />
+                <div class="row">
+                  <div
+                    class="col-lg-4 col-md-3 col-4"
+                    v-for="artist in filterCast"
+                    :key="artist.id"
+                  >
+                    <ArtistCard
+                      :item="artist"
                       :theme="theme"
                       :image_url="image_url"
-                      :hover="false"
-                      type="movie"
                     />
-                  </template>
-                </vueper-slide>
-              </Slider>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </header>
-    <!-- Video Header -->
-    <div class="videos-holder container">
+    <!-- Video Block -->
+    <div class="videos-holder container" v-if="filterVideos.length > 0">
       <Headline title="Related Videos" txtStyle="my-2" />
       <div class="row">
         <div
-          class="col-sm-4 col-lg-3"
-          v-for="item in MovieVideos.results"
+          class="col-sm-6 col-lg-4"
+          v-for="item in filterVideos"
           :key="item.id"
         >
           <iFrameVideo :item="item" />
@@ -81,6 +102,7 @@ import "vueperslides/dist/vueperslides.css";
 import Slider from "@/components/Reusable/Slider";
 import Headline from "../components/Reusable/Headline.vue";
 import iFrameVideo from "../components/Reusable/iFrameVideo.vue";
+import ArtistCard from "../components/Reusable/ArtistCard.vue";
 export default {
   components: {
     Poster,
@@ -90,6 +112,7 @@ export default {
     Headline,
     PreviewCard,
     iFrameVideo,
+    ArtistCard,
   },
   setup() {
     const image_url = "https://image.tmdb.org/t/p/w500";
@@ -113,14 +136,39 @@ function FetchDetails() {
   const MovieVideos = computed(() => {
     return store.state.movies.MovieVideos;
   });
+  const MovieCast = computed(() => {
+    return store.state.movies.MovieCast;
+  });
+
+  const filterVideos = computed(() => {
+    if (MovieVideos.value) {
+      if (MovieVideos.value.results.length < 2) {
+        return MovieVideos.value.results;
+      } else {
+        return MovieVideos.value.results.splice(0, 2);
+      }
+    }
+  });
+  const filterCast = computed(() => {
+    if (MovieCast.value) {
+      if (MovieCast.value.cast.length < 3) {
+        return MovieCast.value.cast;
+      } else {
+        return MovieCast.value.cast.splice(0, 3);
+      }
+    }
+  });
+
+  // console.log(filterCast.value);
 
   watchEffect(() => {
     store.dispatch("getMovieDetails", route.params.id);
     store.dispatch("getSimilarMovies", route.params.id);
     store.dispatch("getMovieVideos", route.params.id);
+    store.dispatch("getMovieCast", route.params.id);
   });
 
-  return { theme, MovieDetails, SimilarMovies, MovieVideos };
+  return { theme, MovieDetails, SimilarMovies, filterVideos, filterCast };
 }
 </script>
 

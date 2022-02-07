@@ -23,7 +23,7 @@ function darkMode() {
 
   const isDarkHandler = () => {
     if (!localStorage.getItem("dark")) {
-      localStorage.setItem("dark", true);
+      localStorage.setItem("dark", false);
     } else {
       let dark = JSON.parse(localStorage.getItem("dark"));
 

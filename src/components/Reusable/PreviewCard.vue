@@ -6,13 +6,13 @@
           v-if="item.poster_path"
           :src="image_url + item.poster_path"
           alt="poster for movie"
-          class="img-fluid rounded"
+          class="img-fluid radius"
         />
         <img
           v-else
-          src="https://cdn.dribbble.com/users/1090020/screenshots/14155126/media/dd426688b9a8786c308df4b712f7e1cf.png"
+          src="https://media.filfan.com/NewsPics/FilfanNew/large/Latrag3.jpg"
           alt="poster for movie"
-          class="img-fluid rounded"
+          class="img-fluid radius"
         />
       </div>
       <div class="context p-2" :style="`background-color: ${theme.lite_color}`">
@@ -110,6 +110,7 @@
       <div v-else>
         <router-link
           v-if="type !== 'fav'"
+          @click="handler()"
           :to="`/${type}/${item.id}`"
           class="position-absolute top-0 w-100 h-100"
         >
@@ -185,6 +186,7 @@ export default {
       .hover {
         opacity: 1;
         pointer-events: all;
+        user-select: all;
       }
     }
 
@@ -222,8 +224,9 @@ export default {
       opacity: 0;
       z-index: 9;
       pointer-events: none;
+      user-select: none;
       backdrop-filter: blur(5px);
-      transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out 0.3s;
     }
   }
 }

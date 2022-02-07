@@ -1,6 +1,9 @@
 <template>
   <div class="home">
-    <div class="container mt-4" v-if="HomeData && TopMovies && TopShows">
+    <div
+      class="container mt-4"
+      v-if="HomeData && TopMovies && TopShows && TopArtists"
+    >
       <!-- Slider Block -->
       <Slider :theme="theme" height="85vh" :breakpoints="{}" :visibleSlides="1">
         <vueper-slide
@@ -55,6 +58,20 @@
         </div>
       </CardsSlider>
       <LoadMore param="/tv" />
+
+      <!-- Best Artists Block -->
+      <Headline title="Top Artists" txtStyle="text-center mt-5 mb-4" />
+      <CardsSlider>
+        <div
+          class="col-6 col-sm-4 col-md-3 col-xl-2"
+          v-for="item in TopArtists"
+          :key="item.id"
+        >
+          <div class="carousel-cell px-2" style="width: 100%">
+            <ArtistCard :item="item" :theme="theme" :image_url="image_url" />
+          </div>
+        </div>
+      </CardsSlider>
     </div>
     <div v-else>
       <LoadingPage />
@@ -74,6 +91,7 @@ import Headline from "../components/Reusable/Headline.vue";
 import PreviewCard from "../components/Reusable/PreviewCard.vue";
 import LoadMore from "../components/Reusable/LoadMore.vue";
 import CardsSlider from "../components/Reusable/CardsSlider.vue";
+import ArtistCard from "../components/Reusable/ArtistCard.vue";
 import LoadingPage from "../components/Reusable/LoadingPage.vue";
 
 export default {
@@ -86,6 +104,7 @@ export default {
     PreviewCard,
     CardsSlider,
     LoadMore,
+    ArtistCard,
     LoadingPage,
   },
   setup() {
@@ -110,15 +129,20 @@ function FetchHomeDataFunc() {
   const TopShows = computed(() => {
     if (store.state.shows.TopShows) return store.state.shows.TopShows.results;
   });
+  const TopArtists = computed(() => {
+    if (store.state.artists.BestArtists)
+      return store.state.artists.BestArtists.results;
+  });
 
-  // console.log(TopMovies);
+  // console.log(store.state);
   watchEffect(() => {
     store.dispatch("getHomeData", 1);
     store.dispatch("getTopMovies", 1);
     store.dispatch("getTopShows", 1);
+    store.dispatch("getBestArtists", 1);
   });
 
-  return { HomeData, theme, TopMovies, TopShows };
+  return { HomeData, theme, TopMovies, TopShows, TopArtists };
 }
 </script>
 <style lang="scss" scoped></style>

@@ -4,6 +4,7 @@ import Tv from "../views/Tv.vue";
 import Movies from "../views/Movies.vue";
 import MoviePage from "../views/MoviePage.vue";
 import TvPage from "../views/TvPage.vue";
+import ArtistPage from "../views/ArtistPage.vue";
 import Favourites from "../views/Favourites.vue";
 
 const routes = [
@@ -31,6 +32,11 @@ const routes = [
     path: "/tv/:id",
     name: "TvPage",
     component: TvPage,
+  },
+  {
+    path: "/artist/:id",
+    name: "ArtistPage",
+    component: ArtistPage,
   },
   {
     path: "/favs",

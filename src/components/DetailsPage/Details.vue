@@ -1,7 +1,7 @@
 <template>
   <div class="position-relative">
     <div class="title">
-      <div class="col-12">
+      <div class="col-12 mb-2">
         <span
           v-if="item.status === 'Released'"
           class="bg-success radius fw-bold btn-sm"
@@ -12,7 +12,7 @@
           {{ item.status }}
         </span>
       </div>
-      <div class="col-12">
+      <div class="col-12 mb-2">
         <CardTitle
           :title="item.title || item.name"
           :length="1000"
@@ -21,7 +21,7 @@
           :color="theme.color"
         />
       </div>
-      <div class="col-12">
+      <div class="col-12 mb-2">
         <div class="release-date">
           {{ item.release_date }}
         </div>
@@ -29,7 +29,7 @@
           {{ item.tagline }}
         </p>
       </div>
-      <div class="col-12">
+      <div class="col-12 mb-2">
         <div class="rate-lang d-flex gap-3 pb-1">
           <small class="text-uppercase fw-bold">{{
             item.original_language
@@ -46,12 +46,12 @@
         </div>
       </div>
     </div>
-    <div class="col-12">
+    <div class="col-12 mb-2">
       <div class="discription">
         <Description :text="item.overview" :maxLength="200" />
       </div>
     </div>
-    <div class="col-12">
+    <div class="col-12 mb-2">
       <div class="actions d-flex gap-2">
         <div>
           <a
@@ -68,7 +68,9 @@
           <button
             class="btn radius color"
             title="Add to favorites"
-            :style="`background-color: ${theme.background}; box-shadow: ${theme.shadow}`"
+            :style="`background-color: ${
+              timeout ? 'rgb(25, 223, 91)' : theme.background
+            }; box-shadow: ${theme.shadow}`"
             @click="addToFav(item)"
           >
             <i class="bi bi-heart"></i>

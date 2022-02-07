@@ -5,6 +5,7 @@ import movies from "./Movies/movies";
 import shows from "./Shows/shows";
 import fav from "./Favourite/fav";
 import search from "./Search/index";
+import artists from "./Artist/index";
 
 export default createStore({
   namespaced: true,
@@ -54,5 +55,6 @@ export default createStore({
     shows,
     fav,
     search,
+    artists,
   },
 });

@@ -5,6 +5,7 @@ const state = {
   ShowDetails: null,
   SimilarShows: null,
   ShowsVideos: null,
+  ShowCast: null,
 };
 
 const getters = {};
@@ -22,6 +23,9 @@ const mutations = {
   SHOWS_VIDEOS(state, data) {
     state.ShowsVideos = data;
   },
+  SHOWS_CAST(state, data) {
+    state.ShowCast = data;
+  },
 };
 
 const actions = {
@@ -36,6 +40,9 @@ const actions = {
   },
   getShowsVideos(_, show_id) {
     get("tv", show_id, "videos", 1, "SHOWS_VIDEOS");
+  },
+  getShowCast(_, show_id) {
+    get("tv", show_id, "credits", 1, "SHOWS_CAST");
   },
 };
 

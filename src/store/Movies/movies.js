@@ -5,6 +5,7 @@ const state = {
   MovieDetails: null,
   SimilarMovies: null,
   MovieVideos: null,
+  MovieCast: null,
   AddRate: null,
 };
 
@@ -23,6 +24,9 @@ const mutations = {
   MOVIE_VIDEOS(state, data) {
     state.MovieVideos = data;
   },
+  MOVIE_CAST(state, data) {
+    state.MovieCast = data;
+  },
   ADD_RATE(state, data) {
     state.AddRate = data;
   },
@@ -40,6 +44,9 @@ const actions = {
   },
   getMovieVideos(_, movie_id) {
     get("movie", movie_id, "videos", 1, "MOVIE_VIDEOS");
+  },
+  getMovieCast(_, movie_id) {
+    get("movie", movie_id, "credits", 1, "MOVIE_CAST");
   },
   postAddRate() {
     let payload = JSON.parse(sessionStorage.getItem("rate_payload"));

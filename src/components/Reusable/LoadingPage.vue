@@ -1,5 +1,5 @@
 <template>
-  <div class="loading" :style="`background-color: ${theme.background}`">
+  <div class="loading">
     <img src="@/assets/images/loading.gif" width="200" alt="" />
   </div>
 </template>
@@ -25,10 +25,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  img {
-    mix-blend-mode: multiply;
-    filter: invert(1);
-  }
+  backdrop-filter: blur(20px);
+  background-color: #fff;
 }
 </style>

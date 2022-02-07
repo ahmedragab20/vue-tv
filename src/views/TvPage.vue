@@ -1,5 +1,5 @@
 <template>
-  <div class="details-page" v-if="ShowDetails && SimilarShows && ShowsVideos">
+  <div class="details-page" v-if="ShowDetails && SimilarShows && filterVideos">
     <header
       :style="`background: url(${
         image_url + ShowDetails.backdrop_path
@@ -23,40 +23,60 @@
               />
             </div>
             <div class="col-lg-4 col-12">
-              <Headline title="Similar" txtStyle="my-2" />
-              <Slider
-                :theme="theme"
-                height="260px"
-                :breakpoints="{}"
-                :visibleSlides="2"
-              >
-                <vueper-slide
-                  v-for="item in SimilarShows.results"
-                  :key="item.id"
+              <div class="col-12">
+                <Headline title="Similar" txtStyle="my-2" />
+                <Slider
+                  :theme="theme"
+                  height="260px"
+                  :breakpoints="{}"
+                  :visibleSlides="2"
                 >
-                  <template #content>
-                    <PreviewCard
-                      :item="item"
-                      :theme="theme"
-                      :image_url="image_url"
-                      :hover="false"
-                      type="tv"
-                    />
-                  </template>
-                </vueper-slide>
-              </Slider>
+                  <vueper-slide
+                    v-for="item in SimilarShows.results"
+                    :key="item.id"
+                  >
+                    <template #content>
+                      <PreviewCard
+                        :item="item"
+                        :theme="theme"
+                        :image_url="image_url"
+                        :hover="false"
+                        type="tv"
+                      />
+                    </template>
+                  </vueper-slide>
+                </Slider>
+              </div>
+              <div class="col-12" v-if="filterCast.length > 0">
+                <div class="col-12">
+                  <Headline title="Cast" txtStyle="mb-2" />
+                  <div class="row">
+                    <div
+                      class="col-lg-4 col-md-3 col-4"
+                      v-for="artist in filterCast"
+                      :key="artist.id"
+                    >
+                      <ArtistCard
+                        :item="artist"
+                        :theme="theme"
+                        :image_url="image_url"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </header>
     <!-- Video Header -->
-    <div class="videos-holder container">
+    <div class="videos-holder container" v-if="filterVideos.length > 0">
       <Headline title="Related Videos" txtStyle="my-2" />
       <div class="row">
         <div
-          class="col-sm-4 col-lg-3"
-          v-for="item in ShowsVideos.results"
+          class="col-sm-4 col-lg-4"
+          v-for="item in filterVideos"
           :key="item.id"
         >
           <iFrameVideo :item="item" />
@@ -78,6 +98,7 @@ import PreviewCard from "../components/Reusable/PreviewCard.vue";
 import { VueperSlide } from "vueperslides";
 import "vueperslides/dist/vueperslides.css";
 import Slider from "@/components/Reusable/Slider";
+import ArtistCard from "../components/Reusable/ArtistCard.vue";
 import iFrameVideo from "../components/Reusable/iFrameVideo.vue";
 export default {
   components: {
@@ -87,6 +108,7 @@ export default {
     PreviewCard,
     VueperSlide,
     Slider,
+    ArtistCard,
     iFrameVideo,
   },
   setup() {
@@ -111,16 +133,37 @@ function FetchDetails() {
   const ShowsVideos = computed(() => {
     return store.state.shows.ShowsVideos;
   });
+  const ShowCast = computed(() => {
+    return store.state.shows.ShowCast;
+  });
 
-  console.log(ShowsVideos.value);
+  const filterVideos = computed(() => {
+    if (ShowsVideos.value) {
+      if (ShowsVideos.value.results.length < 3) {
+        return ShowsVideos.value.results;
+      } else {
+        return ShowsVideos.value.results.splice(0, 3);
+      }
+    }
+  });
+  const filterCast = computed(() => {
+    if (ShowCast.value) {
+      if (ShowCast.value.cast.length < 3) {
+        return ShowCast.value.cast;
+      } else {
+        return ShowCast.value.cast.splice(0, 3);
+      }
+    }
+  });
 
   watchEffect(() => {
     store.dispatch("getShowDetails", route.params.id);
     store.dispatch("getSimilarShows", route.params.id);
     store.dispatch("getShowsVideos", route.params.id);
+    store.dispatch("getShowCast", route.params.id);
   });
 
-  return { theme, ShowDetails, SimilarShows, ShowsVideos };
+  return { theme, ShowDetails, SimilarShows, filterVideos, filterCast };
 }
 </script>
 

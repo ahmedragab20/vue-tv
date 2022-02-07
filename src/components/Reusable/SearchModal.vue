@@ -38,7 +38,7 @@
             >
               <PreviewCard
                 :theme="theme"
-                :hover="true"
+                :hover="false"
                 :type="item.media_type"
                 :image_url="image_url"
                 :item="item"

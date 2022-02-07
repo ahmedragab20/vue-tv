@@ -1,13 +1,16 @@
 <template>
-  <div
+  <router-link
+    to="/favs"
     class="snackbar radius px-2 py-4"
     :style="`
       background-color: ${theme.background};
       color: ${theme.color}; box-shadow: ${theme.shadow};
       border-color: ${borderColor}`"
   >
-    {{ msg }}
-  </div>
+    <div class="">
+      {{ msg }}
+    </div>
+  </router-link>
 </template>
 
 <script>
@@ -31,7 +34,7 @@ export default {
 
   @media (max-width: 600px) {
     top: auto;
-    bottom: 40px;
+    bottom: 300px;
   }
 }
 </style>

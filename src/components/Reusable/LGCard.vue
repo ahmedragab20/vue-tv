@@ -48,7 +48,7 @@
               :src="image_url + item.poster_path"
               alt=""
               width="200"
-              class="img-fluid rounded"
+              class="img-fluid radius"
             />
           </router-link>
         </div>
