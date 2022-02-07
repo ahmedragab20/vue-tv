@@ -1,5 +1,5 @@
 <template>
-  <div class="poster" v-if="item">
+  <div class="poster mb-2" v-if="item">
     <div class="image-container d-flex justify-content-center">
       <div class="image">
         <img
