@@ -30,3 +30,27 @@ ul {
 .transition {
   transition: all 0.3s ease-in-out;
 }
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.card-space {
+  margin: 0.7em;
+}
+.text-align {
+  text-align: left !important;
+  @media (max-width: 768px) {
+    text-align: center !important;
+  }
+}
+.details-page {
+  min-height: 86vh;
+  header {
+    background-size: cover !important;
+    position: relative;
+    .holder {
+      backdrop-filter: blur(10px);
+    }
+  }
+}

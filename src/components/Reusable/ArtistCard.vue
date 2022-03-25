@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="`/artist/${item.id}`">
+  <router-link :to="`/artist/${item.id}`" class="card-space">
     <div class="artist-card position-relative radius overflow-hidden">
       <div class="card-container radius">
         <div class="image">
@@ -13,13 +13,11 @@
         </div>
         <div
           class="context position-absolute bottom-0 w-100 p-1"
-          :style="`background-color: ${theme.fade_color}; box-shadow: ${theme.shadow}`"
+          :style="`background-color: ${theme.lite_color}; box-shadow: ${theme.shadow}`"
         >
           <CardTitle
             :title="item.original_name || item.name"
-            :length="8"
-            :smLength="7"
-            txtStyle="font-weight-bold text-capitalize fw-bold"
+            txtStyle="text-start text-capitalize fw-bold"
             :color="theme.color"
           />
         </div>

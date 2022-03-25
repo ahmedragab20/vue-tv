@@ -5,73 +5,78 @@
       v-if="HomeData && TopMovies && TopShows && TopArtists"
     >
       <!-- Slider Block -->
-      <Slider :theme="theme" height="85vh" :breakpoints="{}" :visibleSlides="1">
-        <vueper-slide
-          v-for="item in HomeData"
-          :key="item.id"
-          :image="image_url + item.poster_path"
-        >
-          <template #content>
-            <LGCard :theme="theme" :item="item" />
-          </template>
-        </vueper-slide>
-      </Slider>
+      <Carousel
+        :items="HomeData"
+        :settings="mainSliderSettings"
+        :breakpoints="mainSliderBreakpoints"
+        :style="`box-shadow: ${theme.shadow}`"
+        class="radius overflow-hidden"
+      >
+        <template #card="scope">
+          <div
+            class="lg-card-container h-100 w-100"
+            :style="`background: url(${
+              image_url + scope.item.poster_path
+            }) center; background-size: cover;`"
+          >
+            <LGCard :theme="theme" :item="scope.item" />
+          </div>
+        </template>
+      </Carousel>
 
       <!-- Popular Movies Block -->
       <Headline title="Popular Movies" txtStyle="text-center mt-5 mb-4" />
-      <CardsSlider>
-        <div
-          class="col-6 col-sm-4 col-md-3 col-xl-2"
-          v-for="item in TopMovies"
-          :key="item.id"
-        >
-          <div class="carousel-cell" style="width: 100%">
-            <PreviewCard
-              :item="item"
-              :theme="theme"
-              :image_url="image_url"
-              :hover="true"
-              type="movie"
-            />
-          </div>
-        </div>
-      </CardsSlider>
+      <Carousel
+        :items="TopMovies"
+        :settings="sliderSettings"
+        :breakpoints="breakpoints"
+      >
+        <template #card="scope">
+          <PreviewCard
+            :item="scope.item"
+            :theme="theme"
+            :hover="true"
+            :image_url="image_url"
+            type="movie"
+          />
+        </template>
+      </Carousel>
       <LoadMore param="/movies" />
 
       <!-- Popular TV Shows Block -->
       <Headline title="Popular Tv Shows" txtStyle="text-center mt-5 mb-4" />
-      <CardsSlider>
-        <div
-          class="col-6 col-sm-4 col-md-3 col-xl-2"
-          v-for="item in TopShows"
-          :key="item.id"
-        >
-          <div class="carousel-cell" style="width: 100%">
-            <PreviewCard
-              :item="item"
-              :theme="theme"
-              :hover="true"
-              :image_url="image_url"
-              type="tv"
-            />
-          </div>
-        </div>
-      </CardsSlider>
+      <Carousel
+        :items="TopShows"
+        :settings="sliderSettings"
+        :breakpoints="breakpoints"
+      >
+        <template #card="scope">
+          <PreviewCard
+            :item="scope.item"
+            :theme="theme"
+            :hover="true"
+            :image_url="image_url"
+            type="tv"
+          />
+        </template>
+      </Carousel>
       <LoadMore param="/tv" />
 
       <!-- Best Artists Block -->
-      <Headline title="Top Artists" txtStyle="text-center mt-5 mb-4" />
-      <CardsSlider>
-        <div
-          class="col-6 col-sm-4 col-md-3 col-xl-2"
-          v-for="item in TopArtists"
-          :key="item.id"
-        >
-          <div class="carousel-cell px-2" style="width: 100%">
-            <ArtistCard :item="item" :theme="theme" :image_url="image_url" />
-          </div>
-        </div>
-      </CardsSlider>
+      <Headline title="Popular Artists" txtStyle="text-center mt-5 mb-4" />
+      <Carousel
+        :items="TopArtists"
+        :settings="sliderSettings"
+        :breakpoints="breakpoints"
+      >
+        <template #card="scope">
+          <ArtistCard
+            :item="scope.item"
+            :theme="theme"
+            :image_url="image_url"
+          />
+        </template>
+      </Carousel>
     </div>
     <div v-else>
       <LoadingPage />
@@ -82,35 +87,44 @@
 <script>
 import { computed, watchEffect } from "@vue/runtime-core";
 import { useStore } from "vuex";
-import { VueperSlide } from "vueperslides";
-import "vueperslides/dist/vueperslides.css";
 
-import Slider from "@/components/Reusable/Slider";
 import LGCard from "../components/Reusable/LGCard.vue";
 import Headline from "../components/Reusable/Headline.vue";
 import PreviewCard from "../components/Reusable/PreviewCard.vue";
 import LoadMore from "../components/Reusable/LoadMore.vue";
-import CardsSlider from "../components/Reusable/CardsSlider.vue";
+import Carousel from "../components/Reusable/Carousel.vue";
 import ArtistCard from "../components/Reusable/ArtistCard.vue";
 import LoadingPage from "../components/Reusable/LoadingPage.vue";
 
+import carouselOptions from "@/composables/carouselOptions.js";
 export default {
   name: "Home",
   components: {
-    Slider,
     LGCard,
-    VueperSlide,
     Headline,
     PreviewCard,
-    CardsSlider,
     LoadMore,
     ArtistCard,
     LoadingPage,
+    Carousel,
   },
   setup() {
     const image_url = "https://image.tmdb.org/t/p/w500";
+    const {
+      sliderSettings,
+      breakpoints,
+      mainSliderSettings,
+      mainSliderBreakpoints,
+    } = carouselOptions("home");
 
-    return { image_url, ...FetchHomeDataFunc() };
+    return {
+      image_url,
+      sliderSettings,
+      breakpoints,
+      mainSliderSettings,
+      mainSliderBreakpoints,
+      ...FetchHomeDataFunc(),
+    };
   },
 };
 function FetchHomeDataFunc() {

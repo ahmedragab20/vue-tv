@@ -22,5 +22,9 @@ export default {
 .load-more {
   padding: 5px 10px;
   margin-top: 10px;
+  
+  a {
+    padding: 0.4em .8em;
+  }
 }
 </style>

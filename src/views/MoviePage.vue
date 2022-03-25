@@ -1,7 +1,7 @@
 <template>
   <div
     class="details-page"
-    v-if="MovieDetails && SimilarMovies && filterVideos"
+    v-if="MovieDetails && SimilarMovies && filterCast && filterVideos"
   >
     <!-- Header Holder -->
     <header
@@ -30,27 +30,22 @@
             <div class="col-lg-4 col-12">
               <div class="col-12">
                 <Headline title="Similar" txtStyle="mb-2" />
-                <Slider
-                  :theme="theme"
-                  height="260px"
-                  :breakpoints="{}"
-                  :visibleSlides="2"
+
+                <Carousel
+                  :items="SimilarMovies.results"
+                  :settings="sliderSettings"
+                  :breakpoints="breakpoints"
                 >
-                  <vueper-slide
-                    v-for="item in SimilarMovies.results"
-                    :key="item.id"
-                  >
-                    <template #content>
-                      <PreviewCard
-                        :item="item"
-                        :theme="theme"
-                        :image_url="image_url"
-                        :hover="false"
-                        type="movie"
-                      />
-                    </template>
-                  </vueper-slide>
-                </Slider>
+                  <template #card="scope">
+                    <PreviewCard
+                      :item="scope.item"
+                      :theme="theme"
+                      :image_url="image_url"
+                      :hover="false"
+                      type="movie"
+                    />
+                  </template>
+                </Carousel>
               </div>
               <div class="col-12" v-if="filterCast.length > 0">
                 <Headline title="Cast" txtStyle="mb-2" />
@@ -97,18 +92,17 @@ import { useRoute } from "vue-router";
 import Poster from "@/components/DetailsPage/Poster";
 import Details from "@/components/DetailsPage/Details";
 import PreviewCard from "../components/Reusable/PreviewCard.vue";
-import { VueperSlide } from "vueperslides";
-import "vueperslides/dist/vueperslides.css";
-import Slider from "@/components/Reusable/Slider";
+import Carousel from "../components/Reusable/Carousel.vue";
 import Headline from "../components/Reusable/Headline.vue";
 import iFrameVideo from "../components/Reusable/iFrameVideo.vue";
 import ArtistCard from "../components/Reusable/ArtistCard.vue";
+
+import carouselOptions from "@/composables/carouselOptions.js";
 export default {
   components: {
     Poster,
     Details,
-    Slider,
-    VueperSlide,
+    Carousel,
     Headline,
     PreviewCard,
     iFrameVideo,
@@ -116,8 +110,9 @@ export default {
   },
   setup() {
     const image_url = "https://image.tmdb.org/t/p/w500";
+    const { sliderSettings, breakpoints } = carouselOptions("details");
 
-    return { image_url, ...FetchDetails() };
+    return { image_url, sliderSettings, breakpoints, ...FetchDetails() };
   },
 };
 
@@ -171,13 +166,3 @@ function FetchDetails() {
   return { theme, MovieDetails, SimilarMovies, filterVideos, filterCast };
 }
 </script>
-
-<style lang="scss" scoped>
-header {
-  background-size: cover !important;
-  position: relative;
-  .holder {
-    backdrop-filter: blur(10px);
-  }
-}
-</style>

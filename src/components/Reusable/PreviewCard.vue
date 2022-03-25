@@ -1,5 +1,5 @@
 <template>
-  <div class="preview-card m-2 radius">
+  <div class="preview-card card-space radius">
     <div class="card-container">
       <div class="image">
         <img
@@ -15,17 +15,18 @@
           class="img-fluid radius"
         />
       </div>
-      <div class="context p-2" :style="`background-color: ${theme.lite_color}`">
+      <div
+        class="context px-2 py-1 d-flex justify-content-evenly flex-column gap-1"
+        :style="`background-color: ${theme.lite_color}`"
+      >
         <div class="title">
           <CardTitle
             :title="item.title || item.name"
-            :length="10"
-            :smLength="8"
-            txtStyle="font-weight-bold text-capitalize fw-bold"
+            txtStyle="text-start fw-boldtext-capitalize fw-bold"
             :color="theme.color"
           />
         </div>
-        <div class="rate-lang d-flex gap-3 pb-1">
+        <div class="rate-lang d-flex gap-3">
           <small class="text-uppercase fw-bold">{{
             item.original_language
           }}</small>
@@ -41,7 +42,7 @@
       </div>
       <div
         v-if="hover"
-        class="hover position-absolute pt-2 px-3"
+        class="hover position-absolute py-2 px-3"
         :style="`background-color: ${theme.lite_color}`"
       >
         <div class="row">
@@ -64,9 +65,7 @@
             <div class="title">
               <CardTitle
                 :title="item.title || item.name"
-                :length="15"
-                :smLength="12"
-                txtStyle="font-weight-bold text-capitalize fw-bold"
+                txtStyle="text-start fw-boldtext-capitalize fw-bold h3"
                 :color="theme.color"
               />
             </div>
@@ -74,33 +73,38 @@
               <CardText
                 :text="item.overview"
                 :color="theme.color"
-                txtStyle=""
-                :length="30"
+                txtStyle="text-start truncate"
+                :length="40"
               />
             </div>
           </div>
-          <div class="col-12">
+          <div class="col-12 d-flex pb-3">
             <router-link
               v-if="type !== 'fav' && !handler"
               :to="`/${type}/${item.id}`"
-              class="btn color radius mt-3 text-uppercase"
+              class="hover-btn btn w-100 mb-2 color rounded-pill mt-3 text-uppercase"
               :style="`background-color: ${theme.background}`"
             >
               <i class="bi bi-play"></i> more details
             </router-link>
-            <router-link
+            <!-- @click.native="handler()" -->
+            <div
               v-else-if="type !== 'fav' && handler"
+              class="d-inline"
               @click="handler()"
-              :to="`/${type}/${item.id}`"
-              class="btn color radius mt-3 text-uppercase"
-              :style="`background-color: ${theme.background}`"
             >
-              <i class="bi bi-play"></i> more details
-            </router-link>
+              <router-link
+                :to="`/${type}/${item.id}`"
+                class="hover-btn btn w-100 mb-2 color rounded-pill mt-3 text-uppercase"
+                :style="`background-color: ${theme.background}`"
+              >
+                <i class="bi bi-play"></i> more details
+              </router-link>
+            </div>
             <button
-              @click="handler(item.id)"
               v-else
-              class="btn btn-danger radius mt-3 text-uppercase"
+              @click="handler(item.id)"
+              class="hover-btn btn w-100 mb-2 btn-danger rounded-pill mt-3 text-uppercase"
             >
               Remove
             </button>
@@ -154,7 +158,6 @@ export default {
   setup() {
     let interval = setInterval(() => {
       let hover_card = document.querySelectorAll(".hover");
-      // console.log(hover_card);
       hover_card.forEach((el) => {
         let rect = el.getBoundingClientRect();
 

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="lg-card h-100 p-2"
+    class="lg-card h-100 px-2 py-4 text-align"
     :style="`background-color: ${theme.fade_color}`"
   >
     <div class="row h-100 d-flex justify-content-center align-items-center">
@@ -10,17 +10,14 @@
             <div v-if="item.media_type === 'movie'">
               <CardTitle
                 :title="item.title"
-                :length="17"
-                txtStyle="font-weight-bold text-capitalize xl-title"
+                txtStyle="text-start fw-boldtext-capitalize xl-title"
                 :color="theme.color"
               />
             </div>
             <h3 v-else>
               <CardTitle
                 :title="item.name"
-                :length="17"
-                :smLength="11"
-                txtStyle="font-weight-bold text-capitalize xl-title"
+                txtStyle="text-start fw-boldtext-capitalize xl-title"
                 :color="theme.color"
               />
             </h3>
@@ -39,7 +36,7 @@
         </div>
       </div>
       <div
-        class="col-md-4 d-flex justify-content-center align-items-center flex-column"
+        class="col-md-4 my-4 d-flex justify-content-center align-items-center flex-column"
       >
         <div class="image">
           <router-link :to="`/${item.media_type}/${item.id}`">
@@ -59,7 +56,7 @@
             <CardText
               :text="item.overview"
               :color="theme.color"
-              txtStyle=""
+              txtStyle="text-start "
               :length="200"
             />
           </div>

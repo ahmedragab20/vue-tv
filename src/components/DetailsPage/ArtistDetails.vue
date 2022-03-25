@@ -10,9 +10,7 @@
           </div>
           <CardTitle
             :title="item.title || item.name"
-            :length="1000"
-            :smLength="1000"
-            txtStyle="font-weight-bold text-capitalize fw-bold xl-title"
+            txtStyle="text-startfw-boldtext-capitalize fw-bold xl-title"
             :color="theme.color"
           />
         </div>

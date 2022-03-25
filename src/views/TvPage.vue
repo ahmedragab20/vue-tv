@@ -25,43 +25,36 @@
             <div class="col-lg-4 col-12">
               <div class="col-12">
                 <Headline title="Similar" txtStyle="my-2" />
-                <Slider
-                  :theme="theme"
-                  height="260px"
-                  :breakpoints="{}"
-                  :visibleSlides="2"
+
+                <Carousel
+                  :items="SimilarShows.results"
+                  :settings="sliderSettings"
+                  :breakpoints="breakpoints"
                 >
-                  <vueper-slide
-                    v-for="item in SimilarShows.results"
-                    :key="item.id"
-                  >
-                    <template #content>
-                      <PreviewCard
-                        :item="item"
-                        :theme="theme"
-                        :image_url="image_url"
-                        :hover="false"
-                        type="tv"
-                      />
-                    </template>
-                  </vueper-slide>
-                </Slider>
+                  <template #card="scope">
+                    <PreviewCard
+                      :item="scope.item"
+                      :theme="theme"
+                      :image_url="image_url"
+                      :hover="false"
+                      type="tv"
+                    />
+                  </template>
+                </Carousel>
               </div>
               <div class="col-12" v-if="filterCast.length > 0">
-                <div class="col-12">
-                  <Headline title="Cast" txtStyle="mb-2" />
-                  <div class="row">
-                    <div
-                      class="col-lg-4 col-md-3 col-4"
-                      v-for="artist in filterCast"
-                      :key="artist.id"
-                    >
-                      <ArtistCard
-                        :item="artist"
-                        :theme="theme"
-                        :image_url="image_url"
-                      />
-                    </div>
+                <Headline title="Cast" txtStyle="mb-2" />
+                <div class="row">
+                  <div
+                    class="col-lg-4 col-md-3 col-4"
+                    v-for="artist in filterCast"
+                    :key="artist.id"
+                  >
+                    <ArtistCard
+                      :item="artist"
+                      :theme="theme"
+                      :image_url="image_url"
+                    />
                   </div>
                 </div>
               </div>
@@ -95,26 +88,26 @@ import Poster from "@/components/DetailsPage/Poster";
 import Details from "@/components/DetailsPage/Details";
 import Headline from "../components/Reusable/Headline.vue";
 import PreviewCard from "../components/Reusable/PreviewCard.vue";
-import { VueperSlide } from "vueperslides";
-import "vueperslides/dist/vueperslides.css";
-import Slider from "@/components/Reusable/Slider";
 import ArtistCard from "../components/Reusable/ArtistCard.vue";
 import iFrameVideo from "../components/Reusable/iFrameVideo.vue";
+import Carousel from "../components/Reusable/Carousel.vue";
+
+import carouselOptions from "@/composables/carouselOptions.js";
 export default {
   components: {
     Poster,
     Details,
     Headline,
     PreviewCard,
-    VueperSlide,
-    Slider,
     ArtistCard,
     iFrameVideo,
+    Carousel,
   },
   setup() {
     const image_url = "https://image.tmdb.org/t/p/w500";
+    const { sliderSettings, breakpoints } = carouselOptions("details");
 
-    return { image_url, ...FetchDetails() };
+    return { image_url, sliderSettings, breakpoints, ...FetchDetails() };
   },
 };
 
@@ -166,13 +159,3 @@ function FetchDetails() {
   return { theme, ShowDetails, SimilarShows, filterVideos, filterCast };
 }
 </script>
-
-<style lang="scss" scoped>
-header {
-  background-size: cover !important;
-  position: relative;
-  .holder {
-    backdrop-filter: blur(10px);
-  }
-}
-</style>

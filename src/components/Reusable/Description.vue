@@ -5,11 +5,11 @@
     </p>
     <p v-else-if="maxLength < text.length && !readMore">
       {{ text.substring(0, maxLength) }}
-      ...<span @click.self="readMoreHandler" class="fw-bold"> Read more</span>
+      ...<span @click.self="readMoreHandler" class="fw-bold"> ReadMore</span>
     </p>
     <p v-else-if="maxLength && readMore">
       {{ text }}
-      ...<span @click.self="readMoreHandler" class="fw-bold"> Read less</span>
+      ...<span @click.self="readMoreHandler" class="fw-bold"> ReadLess</span>
     </p>
     <p v-else-if="maxLength > text.length">
       {{ text }}

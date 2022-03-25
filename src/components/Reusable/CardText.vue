@@ -51,16 +51,6 @@
 <script>
 export default {
   props: ["text", "txtStyle", "color", "length"],
-  // mounted() {
-  //   let text = document.querySelectorAll(".card-text");
-  //   setInterval(() => {
-  //     if (this.color) {
-  //       text.forEach((el) => {
-  //         el.style.color = this.color;
-  //       });
-  //     }
-  //   });
-  // },
 };
 </script>
 
@@ -71,13 +61,11 @@ p {
 @media (max-width: 480px) {
   p {
     font-size: 0.8rem;
-    //text-align: center;
   }
 }
 @media (max-width: 280px) {
   p {
     font-size: 0.6rem;
-    //text-align: center;
   }
 }
 </style>

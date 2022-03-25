@@ -14,13 +14,11 @@
     "bootstrap": "^5.1.3",
     "core-js": "^3.6.5",
     "register-service-worker": "^1.7.1",
-    "swiper": "^8.0.3",
     "vue": "^3.0.0",
     "vue-carousel-card": "^1.0.7",
-    "vue-flickity": "^1.2.1",
     "vue-router": "^4.0.0-0",
+    "vue3-carousel": "^0.1.38",
     "vue3-star-ratings": "^1.1.0",
-    "vueperslides": "^3.3.2",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
