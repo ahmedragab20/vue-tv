@@ -40,7 +40,7 @@ ul {
 }
 .text-align {
   text-align: left !important;
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     text-align: center !important;
   }
 }

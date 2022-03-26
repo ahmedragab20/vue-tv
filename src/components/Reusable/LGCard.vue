@@ -7,20 +7,13 @@
       <div class="col-md-4">
         <div class="context">
           <div class="title">
-            <div v-if="item.media_type === 'movie'">
+            <div v-if="item.title || item.name">
               <CardTitle
-                :title="item.title"
-                txtStyle="text-start fw-boldtext-capitalize xl-title"
+                :title="item.title || item.name"
+                txtStyle="text-align h2 fw-bold text-capitalize"
                 :color="theme.color"
               />
             </div>
-            <h3 v-else>
-              <CardTitle
-                :title="item.name"
-                txtStyle="text-start fw-boldtext-capitalize xl-title"
-                :color="theme.color"
-              />
-            </h3>
           </div>
           <div class="rate-date-holder d-flex gap-3">
             <div class="rate fw-bold" :style="`box-shadow: ${theme.shadow}`">
@@ -56,7 +49,7 @@
             <CardText
               :text="item.overview"
               :color="theme.color"
-              txtStyle="text-start "
+              txtStyle="text-align"
               :length="200"
             />
           </div>

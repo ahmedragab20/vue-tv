@@ -15,7 +15,7 @@
       <div class="col-12 mb-2">
         <CardTitle
           :title="item.title || item.name"
-          txtStyle="text-start fw-boldtext-capitalize fw-bold xl-title h2"
+          txtStyle="text-start fw-boldtext-capitalize fw-bold  h2"
           :color="theme.color"
         />
       </div>

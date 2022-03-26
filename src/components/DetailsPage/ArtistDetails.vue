@@ -10,7 +10,7 @@
           </div>
           <CardTitle
             :title="item.title || item.name"
-            txtStyle="text-startfw-boldtext-capitalize fw-bold xl-title"
+            txtStyle="text-startfw-boldtext-capitalize fw-bold "
             :color="theme.color"
           />
         </div>

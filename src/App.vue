@@ -95,7 +95,6 @@ function listHandlerFunc() {
 #app {
   transition: transform 0.3s ease-in-out;
   position: relative;
-  height: 100%;
 
   &.active {
     transform: translateX(-30vw);
@@ -104,14 +103,10 @@ function listHandlerFunc() {
     }
     &::after {
       content: "";
-      position: absolute;
+      position: fixed;
+      inset: 0;
       z-index: 199;
-      top: 0;
-      left: 0;
-      width: 100%;
-      min-height: 400vh;
       transition: transform 0.3s ease-in-out;
-      // background-color: rgba(167, 167, 167, 0.116);
       backdrop-filter: blur(2px);
     }
   }
